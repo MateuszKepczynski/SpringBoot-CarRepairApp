@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Find Owner</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand " th:href="@{/}">
+            <img src="/images/repair-icon.png" width="80" height="80" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav navbar-right">
+                <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
+                <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
+                    Owners<span class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2>Owners</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Mobile Phone Number</th>
+            <th>Cars</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempOwner: ${ownerList}">
+            <td>
+                <a th:href="@{/owner/showProfile(ownerId=${tempOwner.id})}"
+                   th:text="${tempOwner.firstName}+' '+${tempOwner.lastName}"/>
+            </td>
+            <td th:text="${tempOwner.address}"/>
+            <td th:text="${tempOwner.city}"/>
+            <td th:text="${tempOwner.phoneNumber}"/>
+            <td>
+                <th:block th:each="car:${tempOwner.vehicles}" th:text="${car.brand}+ ', '"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

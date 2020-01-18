@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Add Vehicle</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand " th:href="@{/}">
+            <img src="/images/repair-icon.png" width="80" height="80" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav navbar-right">
+                <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
+                <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
+                    Owners<span class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <hr>
+    <h4>Car Form</h4>
+    <hr>
+    <form action="#" th:action="@{/vehicle/save}" th:object="${vehicle}" method="post">
+        <input type="hidden" th:field="*{id}">
+        Brand: <input type="text" th:field="*{brand}" class="form-control mb-4 col-4" placeholder="Brand">
+        Car Numbers: <input type="text" th:field="*{numbers}" class="form-control mb-4 col-4" placeholder="Car Numbers">
+        <input type="hidden" th:field="*{owner}">
+        Status:
+        <select th:field="*{status}">
+            <option th:value="'None'">None</option>
+            <option th:value="'Waiting in queue'">Waiting in Queue</option>
+            <option th:value="'Work in progress'">Work in progress</option>
+            <option th:value="'Ready to collect'">Ready to collect</option>
+            <option th:value="'Collected'">Collected</option>
+        </select>
+        <br><br>
+        <button class="btn btn-secondary btn-sm" type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>
