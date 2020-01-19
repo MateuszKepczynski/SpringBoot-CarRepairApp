@@ -42,7 +42,7 @@ public class VehicleController
         Owner owner = vehicle.getOwner();
         owner.add(vehicle);
         vehicleRepository.save(vehicle);
-        return "redirect:/owner/findALl";
+        return "redirect:/owner/findAll";
     }
 
     @GetMapping("/update")

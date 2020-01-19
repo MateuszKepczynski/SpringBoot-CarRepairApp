@@ -51,7 +51,7 @@
             <td>
                 <a class="btn btn-secondary btn-sm" th:href="@{/owner/update(ownerId=${owner.id})}">Update</a>
                 <a class="btn btn-danger btn-sm" th:href="@{/owner/delete(ownerId=${owner.id})}"
-                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a>
+                   onclick="if (!(confirm('Are you sure you want to delete this client?'))) return false">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -78,7 +78,7 @@
             <td>
                 <a class="btn btn-secondary btn-sm" th:href="@{/vehicle/update(vehicleId=${tempVehicle.id})}">Update</a>
                 <a class="btn btn-danger btn-sm" th:href="@{/vehicle/delete(vehicleId=${tempVehicle.id})}"
-                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a>
+                   onclick="if (!(confirm('Are you sure you want to delete this car?'))) return false">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -87,5 +87,8 @@
     <a class="btn btn-secondary btn-sm" th:href="@{/vehicle/add(ownerId=${owner.id})}">Add Car</a>
 </div>
 
+<footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">© 2020 Copyright</div>
+</footer>
 </body>
 </html>
