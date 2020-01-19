@@ -1,5 +1,8 @@
 package com.springapp.carrepairshop.carrepairshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,6 @@ import java.util.List;
 @Table(name = "owner")
 public class Owner
 {
-    //TODO finish owner.class.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,10 +34,12 @@ public class Owner
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,
             CascadeType.REFRESH})
     @JoinColumn(name = "id_employee")
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy="owner",
             cascade= {CascadeType.ALL})
+    @JsonManagedReference
     private List<Vehicle> vehicles;
 
 

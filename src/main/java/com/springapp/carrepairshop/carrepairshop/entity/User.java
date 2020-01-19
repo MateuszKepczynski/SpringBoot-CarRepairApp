@@ -1,5 +1,7 @@
 package com.springapp.carrepairshop.carrepairshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,10 +39,12 @@ public class User
 
     @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonManagedReference
     private List<Owner> owners;
 
     @OneToMany(mappedBy="user",cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
+    @JsonManagedReference
     private List<Message> userMessages;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

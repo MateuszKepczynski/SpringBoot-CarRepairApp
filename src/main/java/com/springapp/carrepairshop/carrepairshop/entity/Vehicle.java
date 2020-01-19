@@ -1,5 +1,7 @@
 package com.springapp.carrepairshop.carrepairshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,6 +26,7 @@ public class Vehicle
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="id_client")
+    @JsonBackReference
     private Owner owner;
 
     public Vehicle()

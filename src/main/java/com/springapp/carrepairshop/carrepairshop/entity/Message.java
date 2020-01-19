@@ -1,5 +1,7 @@
 package com.springapp.carrepairshop.carrepairshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Table
@@ -20,6 +22,7 @@ public class Message
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="id_user")
+    @JsonBackReference
     private User user;
 
     public Message()
