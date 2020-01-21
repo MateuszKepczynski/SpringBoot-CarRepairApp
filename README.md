@@ -1,11 +1,11 @@
 # SpringBoot Car Repair Shop App
-Simple app to manage shop. :)
+Simple app to manage shop. :) Also with REST.
 
 Front page:
 ![main page](images/main-page.jpg)
 
-Find Car Owner Page:
-![find_car_owner_page](images/ find-car-page.jpg)
+Find Owner page:
+![show_page owner](images/find-car-page.jpg)
 
 Add Owner page:
 ![add owner](images/add-car-owner.jpg)
