@@ -1,5 +1,5 @@
 # SpringBoot Car Repair Shop App
-Simple app to manage shop. :) Also with REST.
+Simple app to manage shop. :) Also with REST, Hibernate, JPA, Thymeleaf.
 In future I'm planning to improve my app, and I'm planning to add login authentication, and validation on some forms.
 
 Front page:
