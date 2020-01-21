@@ -1,5 +1,6 @@
 # SpringBoot Car Repair Shop App
 Simple app to manage shop. :) Also with REST.
+In future I'm planning to improve my app, and I'm planning to add login authentication, and validations.
 
 Front page:
 ![main page](images/main-page.jpg)
