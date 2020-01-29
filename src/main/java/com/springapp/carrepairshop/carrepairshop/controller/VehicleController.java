@@ -1,9 +1,10 @@
 package com.springapp.carrepairshop.carrepairshop.controller;
 
 import com.springapp.carrepairshop.carrepairshop.dao.OwnerRepository;
-import com.springapp.carrepairshop.carrepairshop.dao.VehicleRepository;
 import com.springapp.carrepairshop.carrepairshop.entity.Owner;
 import com.springapp.carrepairshop.carrepairshop.entity.Vehicle;
+import com.springapp.carrepairshop.carrepairshop.dao.VehicleRepository;
+import com.springapp.carrepairshop.carrepairshop.validation.VehicleValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,12 +38,18 @@ public class VehicleController
     }
 
     @PostMapping("/save")
-    public String saveVehicle(@ModelAttribute("vehicle")Vehicle vehicle)
+    public String saveVehicle(@ModelAttribute("vehicle")Vehicle vehicle,Model model)
     {
-        Owner owner = vehicle.getOwner();
-        owner.add(vehicle);
-        vehicleRepository.save(vehicle);
-        return "redirect:/owner/findAll";
+        VehicleValidation vehicleValidation = new VehicleValidation();
+        if (vehicleValidation.validateVehicle(vehicle))
+        {
+            Owner owner = vehicle.getOwner();
+            owner.add(vehicle);
+            vehicleRepository.save(vehicle);
+            return "redirect:/owner/findAll";
+        }
+        model.addAttribute("saveError","Invalid data");
+        return "vehicle/add-form";
     }
 
     @GetMapping("/update")

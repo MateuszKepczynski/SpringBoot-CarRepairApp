@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +12,7 @@
     <title>Add Form</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand " th:href="@{/}">
@@ -22,6 +27,10 @@
                 <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
                 <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
                     Owners<span class="sr-only">(current)</span></a>
+                <div sec:authorize="hasAnyRole('ROLE_MANAGER')">
+                    <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
+                        Panel</a>
+                </div>
             </div>
         </div>
     </div>
@@ -33,12 +42,15 @@
     <hr>
     <form action="#" th:action="@{/owner/save}" th:object="${owner}" method="post">
         <input type="hidden" th:field="*{id}">
-        First Name:<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="First Name">
-        Last Name:<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Last Name">
-        Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address">
-        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4" placeholder="City">
+        <div th:if="${saveError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
+            <span th:text="${saveError}"></span>
+        </div>
+        First Name:<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="First Name"/>
+        Last Name:<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Last Name"/>
+        Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address"/>
+        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4" placeholder="City"/>
         Phone Number:<input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4"
-                            placeholder="Owner Phone Number">
+                            placeholder="Owner Phone Number"/>
         Employee:
         <select th:field="*{user.lastName}">
             <th:block th:each="user : ${employee}">
@@ -51,7 +63,7 @@
 </div>
 
 <footer class="page-footer font-small blue">
-        <div class="footer-copyright text-center py-3">© 2020 Copyright</div>
+    <div class="footer-copyright text-center py-3">© 2020 Copyright</div>
 </footer>
 </body>
 </html>

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
 <head>
     <!--BOOTSTRAP-->
     <meta charset="UTF-8">
@@ -23,6 +26,10 @@
                 <a class="nav-item nav-link active " style="font-size: 20px" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
                     Owners</a>
+                <div sec:authorize="hasAnyRole('ROLE_MANAGER')">
+                    <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
+                        Panel</a>
+                </div>
             </div>
         </div>
     </div>

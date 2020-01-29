@@ -1,8 +1,9 @@
 package com.springapp.carrepairshop.carrepairshop.controller;
 
-import com.springapp.carrepairshop.carrepairshop.dao.OwnerRepository;
-import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
 import com.springapp.carrepairshop.carrepairshop.entity.Owner;
+import com.springapp.carrepairshop.carrepairshop.dao.OwnerRepository;
+import com.springapp.carrepairshop.carrepairshop.validation.OwnerValidation;
+import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
 import com.springapp.carrepairshop.carrepairshop.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,13 +38,14 @@ public class OwnerController
     public String findByLastName(@ModelAttribute("owner") Owner owner, Model model)
     {
         List<Owner> result = ownerRepository.findOwnerByLastName(owner.getLastName());
-        System.out.println(owner.getLastName());
-        if (!result.isEmpty())
+
+        if (result.isEmpty())
         {
-            model.addAttribute("ownerList", result);
-            return "owner/show-owner-list";
-        } else
-            return "owner/no-result";
+            model.addAttribute("findError","No Owner with Last Name: " + owner.getLastName());
+            return "owner/owner-form";
+        }
+        model.addAttribute("ownerList", result);
+        return "owner/show-owner-list";
     }
 
     @GetMapping("/findAll")
@@ -62,12 +64,21 @@ public class OwnerController
     }
 
     @PostMapping("/save")
-    public String saveOwner(@ModelAttribute("owner")Owner owner)
+    public String saveOwner(@ModelAttribute("owner")Owner owner, Model model)
     {
-        User user = userRepository.findUserByLastName(owner.getUser().getLastName()).get(0);
-        user.addOwner(owner);
-        ownerRepository.save(owner);
-        return "redirect:/owner/findAll";
+        OwnerValidation ownerValidation = new OwnerValidation();
+        if(ownerValidation.validOwner(owner))
+        {
+            User user = userRepository.findUserByLastName(owner.getUser().getLastName()).get(0);
+            user.addOwner(owner);
+            ownerRepository.save(owner);
+            return "redirect:/owner/findAll";
+        }
+
+        model.addAttribute("employee", userRepository.findAll());
+        model.addAttribute("owner",new Owner());
+        model.addAttribute("saveError","Invalid data");
+        return "owner/add-form";
     }
 
     @GetMapping("/showProfile")

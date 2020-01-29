@@ -3,15 +3,15 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 >
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Add Vehicle</title>
+    <title>Employee Panel</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand " th:href="@{/}">
@@ -24,11 +24,11 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav navbar-right">
                 <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
-                <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
-                    Owners<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link " style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
+                    Owners</a>
                 <div sec:authorize="hasAnyRole('ROLE_MANAGER')">
-                    <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
-                        Panel</a>
+                    <a class="nav-item nav-link  active" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
+                        Panel <span class="sr-only">(current)</span></a>
                 </div>
             </div>
         </div>
@@ -36,29 +36,30 @@
 </nav>
 
 <div class="container">
-    <hr>
-    <h4>Car Form</h4>
-    <hr>
-    <form action="#" th:action="@{/vehicle/save}" th:object="${vehicle}" method="post">
-        <input type="hidden" th:field="*{id}">
-        <div th:if="${saveError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
-            <span th:text="${saveError}"></span>
+    <h3>Employee Panel</h3>
+    <form action="#" th:action="@{/employee/save}" th:object="${employee}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{username}"/>
+        <input type="hidden" th:field="*{password}"/>
+        <div th:if="${saveError}"><span th:text="${saveError}"></span> </div>
+
+        <div th:if="!*{id}">
+        User Name: <input type="text" th:field="*{username}" placeholder="User Name" class="form-control mb-4 col-4"/>
+        Password: <input type="password" th:field="*{password}" placeholder="Password" class="form-control mb-4 col-4"/>
         </div>
-        Brand: <input type="text" th:field="*{brand}" class="form-control mb-4 col-4" placeholder="Brand"/>
-        Car Numbers: <input type="text" th:field="*{numbers}" class="form-control mb-4 col-4" placeholder="Car Numbers"/>
-        <input type="hidden" th:field="*{owner}"/>
-        Status:
-        <select th:field="*{status}">
-            <option th:value="'None'">None</option>
-            <option th:value="'Waiting in queue'">Waiting in Queue</option>
-            <option th:value="'Work in progress'">Work in progress</option>
-            <option th:value="'Ready to collect'">Ready to collect</option>
-            <option th:value="'Collected'">Collected</option>
-        </select>
-        <br><br>
+
+        First Name: <input type="text" th:field="*{firstName}" placeholder="First Name"
+                           class="form-control mb-4 col-4"/>
+        Last Name: <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4"/>
+        Address: <input type="text" th:field="*{address}" placeholder="Address" class="form-control mb-4 col-4"/>
+        City: <input type="text" th:field="*{city}" placeholder="City" class="form-control mb-4 col-4"/>
+        Phone Number: <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"
+                             class="form-control mb-4 col-4"/>
+        <hr>
         <button class="btn btn-secondary btn-sm" type="submit">Save</button>
     </form>
 </div>
+
 <footer class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">© 2020 Copyright</div>
 </footer>
