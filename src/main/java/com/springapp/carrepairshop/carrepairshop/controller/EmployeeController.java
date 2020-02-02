@@ -4,27 +4,36 @@ import com.springapp.carrepairshop.carrepairshop.dao.OwnerRepository;
 import com.springapp.carrepairshop.carrepairshop.dao.RoleRepository;
 import com.springapp.carrepairshop.carrepairshop.entity.User;
 import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
-import com.springapp.carrepairshop.carrepairshop.validation.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.Arrays;
 
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController
 {
+    @InitBinder
+    public void initBinder(WebDataBinder binder) //trim whitespaces
+    {
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
     private BCryptPasswordEncoder passwordEncoder;
     private UserRepository userRepository;
     private OwnerRepository ownerRepository;
     private RoleRepository roleRepository;
 
     @Autowired
-    public EmployeeController(UserRepository userRepository, OwnerRepository ownerRepository, RoleRepository roleRepository,BCryptPasswordEncoder passwordEncoder)
+    public EmployeeController(UserRepository userRepository, OwnerRepository ownerRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder)
     {
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -35,7 +44,7 @@ public class EmployeeController
     @GetMapping("/showAll")
     public String showAll(Model model)
     {
-        model.addAttribute("employeeList",userRepository.findAll());
+        model.addAttribute("employeeList", userRepository.findAll());
         return "employee/show-all";
     }
 
@@ -43,50 +52,52 @@ public class EmployeeController
     public String showEmployeeProfile(@RequestParam("employeeId") int id, Model model)
     {
         model.addAttribute("clients", ownerRepository.findOwnerByUserId(id));
-        model.addAttribute("employee",userRepository.findById(id).get());
+        model.addAttribute("employee", userRepository.findById(id).get());
         return "employee/show-profile";
     }
 
     @GetMapping("/showEmployeePanel")
     public String addEmployee(Model model)
     {
-        model.addAttribute("employee",new User());
+        User user = new User();
+        model.addAttribute("employee", user);
         return "admin/employee/add-form";
     }
 
-    @PostMapping("/save") //TODO ADD ROLE SELECT MENU
-    public String save(@ModelAttribute("employee") User user, Model model)
+    @PostMapping("/save")
+    public String save(@Valid @ModelAttribute("employee") User user, BindingResult bindingResult)
     {
-        UserValidation userValidation = new UserValidation();
-
-        User result = userRepository.findUserByUsername(user.getUsername());
-
-        if(result == null)
+        if (bindingResult.hasErrors())
         {
-            if((userValidation.validateUser(user)) && (userRepository.findUserByUsername(user.getUsername()) == null))
+            return "admin/employee/add-form";
+        }
+
+        if (user.getId() == 0) //check user in db, if id == 0 then hes not in db
+        {
+            if (userRepository.findUserByUsername(user.getUsername()) == null) //check username is available
             {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 user.setRole(Arrays.asList(roleRepository.findRoleByName("ROLE_EMPLOYEE")));
                 userRepository.save(user);
                 return "redirect:/employee/showAll";
-            }
-            model.addAttribute("saveError","Invalid data");
-            return "admin/employee/add-form";
+            } else
+                return "admin/employee/add-form";
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/employee/showAll";
-
     }
 
     @GetMapping("/update")
-    public String updateEmployee(@RequestParam("employeeId")int id, Model model)
+    public String updateEmployee(@RequestParam("employeeId") int id, Model model)
     {
-        model.addAttribute("employee",userRepository.findById(id).get());
+        User user = userRepository.findById(id).get();
+        model.addAttribute("employee", user);
         return "admin/employee/add-form";
     }
 
     @GetMapping("/delete")
-    public String deleteEmployeeById(@RequestParam("employeeId")int id)
+    public String deleteEmployeeById(@RequestParam("employeeId") int id)
     {
         userRepository.deleteById(id);
         return "redirect:/employee/showAll";

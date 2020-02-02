@@ -42,13 +42,33 @@
     <hr>
     <form action="#" th:action="@{/owner/save}" th:object="${owner}" method="post">
         <input type="hidden" th:field="*{id}">
-        <div th:if="${saveError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
-            <span th:text="${saveError}"></span>
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+             class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+            First Name error
         </div>
         First Name:<input type="text" th:field="*{firstName}" class="form-control mb-4 col-4" placeholder="First Name"/>
+
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+             class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+            Last Name Error
+        </div>
         Last Name:<input type="text" th:field="*{lastName}" class="form-control mb-4 col-4" placeholder="Last Name"/>
+
+        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+             class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+            Address Error
+        </div>
         Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address"/>
-        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4" placeholder="City"/>
+
+        <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+            City Error
+        </div>
+        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4"  placeholder="City"/>
+
+        <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+             class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+            Phone Number Error
+        </div>
         Phone Number:<input type="text" th:field="*{phoneNumber}" class="form-control mb-4 col-4"
                             placeholder="Owner Phone Number"/>
         Employee:

@@ -39,25 +39,48 @@
     <h3>Employee Panel</h3>
     <form action="#" th:action="@{/employee/save}" th:object="${employee}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <input type="hidden" th:field="*{username}"/>
-        <input type="hidden" th:field="*{password}"/>
-        <div th:if="${saveError}"><span th:text="${saveError}"></span> </div>
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+                Username Error
+            </div>
+            Username:
+            <input type="text" th:field="*{username}" placeholder="Username" class="form-control mb-4 col-4"/>
+        
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"  class="alert alert-danger col-xs-offset-1 mb-4 col-4">Password Error</div>
+            Password:
+            <input type="password" th:field="*{password}" placeholder="Password" class="form-control mb-4 col-4"/>
+            
+        
+        
+        <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"  class="alert alert-danger col-xs-offset-1  mb-4 col-4">First Name Error</div>
+            First Name:
+            <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control mb-4 col-4"/>
+            
+        
+        
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"  class="alert alert-danger col-xs-offset-1  mb-4 col-4">Last Name Error</div>
+            Last Name:
+            <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4"/>
 
-        <div th:if="!*{id}">
-        User Name: <input type="text" th:field="*{username}" placeholder="User Name" class="form-control mb-4 col-4"/>
-        Password: <input type="password" th:field="*{password}" placeholder="Password" class="form-control mb-4 col-4"/>
-        </div>
-
-        First Name: <input type="text" th:field="*{firstName}" placeholder="First Name"
-                           class="form-control mb-4 col-4"/>
-        Last Name: <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control mb-4 col-4"/>
-        Address: <input type="text" th:field="*{address}" placeholder="Address" class="form-control mb-4 col-4"/>
-        City: <input type="text" th:field="*{city}" placeholder="City" class="form-control mb-4 col-4"/>
-        Phone Number: <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"
-                             class="form-control mb-4 col-4"/>
+        
+        
+            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"  class="alert alert-danger col-xs-offset-1  mb-4 col-4">Address Error</div>
+            Address:
+            <input type="text" th:field="*{address}" placeholder="Address" class="form-control mb-4 col-4"/>
+        
+        
+            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="alert alert-danger col-xs-offset-1  mb-4 col-4">City Error</div>
+            City:
+            <input type="text" th:field="*{city}" placeholder="City" class="form-control mb-4 col-4"/>
+        
+        
+            <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="alert alert-danger col-xs-offset-1  mb-4 col-4">Phone Number Error</div>
+            Phone Number:
+            <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number"
+                       class="form-control mb-4 col-4"/>
         <hr>
         <button class="btn btn-secondary btn-sm" type="submit">Save</button>
     </form>
+
 </div>
 
 <footer class="page-footer font-small blue">

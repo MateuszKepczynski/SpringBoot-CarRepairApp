@@ -1,9 +1,10 @@
 package com.springapp.carrepairshop.carrepairshop.service;
 
-import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
 import com.springapp.carrepairshop.carrepairshop.entity.Role;
 import com.springapp.carrepairshop.carrepairshop.entity.User;
+import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService
 {
+   private UserRepository userRepository;
+
     @Autowired
-    UserRepository userRepository;
+    public UserServiceImpl(@Qualifier("userRepository") UserRepository userRepository)
+    {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional

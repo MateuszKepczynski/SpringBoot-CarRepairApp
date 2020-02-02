@@ -3,6 +3,9 @@ package com.springapp.carrepairshop.carrepairshop.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "vehicle")
@@ -14,9 +17,13 @@ public class Vehicle
     private int id;
 
     @Column(name = "brand")
+    @NotNull
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).{2,}$", message = "Wrong brand name")
     private String brand;
 
     @Column(name = "numbers")
+    @NotNull
+    @Pattern(regexp = "^(?=\\S+$).{3,}$", message = "No whitespace")
     private String numbers;
 
     @Column(name = "status")
