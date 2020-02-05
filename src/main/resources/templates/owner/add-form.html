@@ -24,13 +24,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav navbar-right">
-                <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
+                <a class="nav-item nav-link " style="font-size: 20px" th:href="@{/}">Home </a>
                 <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
                     Owners<span class="sr-only">(current)</span></a>
                 <div sec:authorize="hasAnyRole('ROLE_MANAGER')">
                     <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
                         Panel</a>
                 </div>
+                <form th:action="@{/logout}" method="POST">
+                    <input class="nav-item nav-link" type="submit" value="Logout"/>
+                </form>
             </div>
         </div>
     </div>
@@ -60,10 +63,11 @@
         </div>
         Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address"/>
 
-        <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="alert alert-danger col-xs-offset-1 mb-4 col-4">
+        <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+             class="alert alert-danger col-xs-offset-1 mb-4 col-4">
             City Error
         </div>
-        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4"  placeholder="City"/>
+        City:<input type="text" th:field="*{city}" class="form-control mb-4 col-4" placeholder="City"/>
 
         <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
              class="alert alert-danger col-xs-offset-1 mb-4 col-4">

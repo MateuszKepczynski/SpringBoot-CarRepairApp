@@ -9,13 +9,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "vehicle")
-public class Vehicle
+public class Vehicle extends BaseEntity
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
     @Column(name = "brand")
     @NotNull
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).{2,}$", message = "Wrong brand name")
@@ -45,16 +40,6 @@ public class Vehicle
         this.numbers = numbers;
         this.status= status;
         this.owner = owner;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
     }
 
     public String getBrand()
@@ -101,7 +86,6 @@ public class Vehicle
     public String toString()
     {
         return "Vehicle{" +
-                "id=" + id +
                 ", brand='" + brand + '\'' +
                 ", numbers='" + numbers + '\'' +
                 ", status='" + status + '\'' +

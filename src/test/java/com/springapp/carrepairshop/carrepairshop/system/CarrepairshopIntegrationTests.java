@@ -1,4 +1,4 @@
-package com.springapp.carrepairshop.carrepairshop;
+package com.springapp.carrepairshop.carrepairshop.system;
 
 import com.springapp.carrepairshop.carrepairshop.dao.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ class CarrepairshopIntegrationTests
     private UserRepository userRepository;
 
     @Test
-    void testFindAll() throws Exception
+    void testFindAll()
     {
         userRepository.findAll();
         userRepository.findAll();
