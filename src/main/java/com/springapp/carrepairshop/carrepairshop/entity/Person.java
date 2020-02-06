@@ -23,7 +23,6 @@ public class Person extends BaseEntity
 
     @Column(name = "address")
     @NotNull(message = "Address can't be empty")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[-]).{2,}$",message = "Wrong Address name")
     @Size(min = 2,max = 45)
     private String address;
 

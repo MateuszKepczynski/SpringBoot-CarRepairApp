@@ -65,7 +65,7 @@ public class EmployeeController
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute("employee") User user, BindingResult bindingResult)
+    public String save(@Valid @ModelAttribute("employee") User user, BindingResult bindingResult,Model model)
     {
         if (bindingResult.hasErrors())
         {
@@ -81,11 +81,23 @@ public class EmployeeController
                 userRepository.save(user);
                 return "redirect:/employee/showAll";
             } else
+            {
+                model.addAttribute("saveError", "Username taken");
                 return "admin/employee/add-form";
+            }
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return "redirect:/employee/showAll";
+        if (user.getUsername() == userRepository.findById(user.getId()).get().getUsername() || userRepository.findUserByUsername(user.getUsername()) == null)
+        {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return "redirect:/employee/showAll";
+        }
+        else
+        {
+            model.addAttribute("saveError","Username taken");
+            return "admin/employee/add-form";
+        }
+
     }
 
     @GetMapping("/update")

@@ -27,10 +27,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter
     private DataSource securityDataSource;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception
+    {
         auth.authenticationProvider(authenticationProvider()).jdbcAuthentication().dataSource(securityDataSource);
-
     }
 
     @Override
