@@ -11,15 +11,14 @@ import java.util.List;
 @Table(name = "owner")
 public class Owner extends Person
 {
+    @JsonBackReference
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,
             CascadeType.REFRESH})
     @JoinColumn(name = "id_employee")
-    @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy="owner",
-            cascade= {CascadeType.ALL})
     @JsonManagedReference
+    @OneToMany(mappedBy="owner")
     private List<Vehicle> vehicles;
 
 
@@ -47,14 +46,6 @@ public class Owner extends Person
         this.vehicles = vehicles;
     }
 
-    @Override
-    public String toString()
-    {
-        return "Owner{" +
-                "user=" + user +
-                ", vehicles=" + vehicles +
-                '}';
-    }
 
     public void add(Vehicle vehicle)
     {

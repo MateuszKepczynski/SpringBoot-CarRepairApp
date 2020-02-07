@@ -31,8 +31,7 @@ public class VehicleController
     public String addVehicle(@RequestParam("ownerId") int id, Model model)
     {
         Vehicle vehicle = new Vehicle();
-        Owner owner = ownerRepository.findById(id).get();
-        vehicle.setOwner(owner);
+        vehicle.setOwner(ownerRepository.findById(id).get());
 
         model.addAttribute("vehicle", vehicle);
         return "vehicle/add-form";

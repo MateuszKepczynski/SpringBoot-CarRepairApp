@@ -24,10 +24,10 @@ public class Vehicle extends BaseEntity
     @Column(name = "status")
     private String status;
 
+    @JsonBackReference
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="id_client")
-    @JsonBackReference
     private Owner owner;
 
     public Vehicle()

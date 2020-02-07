@@ -25,14 +25,13 @@ public class User extends Person
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{3,}$",message = "A-Z, a-z, 0-9, Special Character: @ # $ % ^ & + = , no whitespace, min 3 char.")
     private String password;
 
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
     @JsonManagedReference
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Owner> owners;
 
+    @JsonManagedReference
     @OneToMany(mappedBy="user",cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JsonManagedReference
     private List<Message> userMessages;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
@@ -96,17 +95,6 @@ public class User extends Person
         this.role = role;
     }
 
-    @Override
-    public String toString()
-    {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", owners=" + owners +
-                ", userMessages=" + userMessages +
-                ", role=" + role +
-                '}';
-    }
 
     public void add(Message userMessage)
     {
