@@ -86,7 +86,8 @@ public class EmployeeController
                 return "admin/employee/add-form";
             }
         }
-        if (user.getUsername() == userRepository.findById(user.getId()).get().getUsername() || userRepository.findUserByUsername(user.getUsername()) == null)
+
+        if (user.getUsername().equals(userRepository.findById(user.getId()).get().getUsername()) || userRepository.findUserByUsername(user.getUsername()) == null)
         {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);

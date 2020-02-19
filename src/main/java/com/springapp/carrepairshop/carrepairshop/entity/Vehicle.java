@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicle")
@@ -29,6 +31,9 @@ public class Vehicle extends BaseEntity
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="id_client")
     private Owner owner;
+
+    @OneToMany(mappedBy = "vehicle",cascade = CascadeType.ALL)
+    private List<Visit> visitList;
 
     public Vehicle()
     {
@@ -82,14 +87,19 @@ public class Vehicle extends BaseEntity
         this.owner = owner;
     }
 
-    @Override
-    public String toString()
+    public List<Visit> getVisitList() {
+        return visitList;
+    }
+
+    public void setVisitList(List<Visit> visitList) {
+        this.visitList = visitList;
+    }
+
+    public void add(Visit visit)
     {
-        return "Vehicle{" +
-                ", brand='" + brand + '\'' +
-                ", numbers='" + numbers + '\'' +
-                ", status='" + status + '\'' +
-                ", owner=" + owner +
-                '}';
+        if (visitList == null)
+            visitList = new ArrayList<>();
+        visitList.add(visit);
+        visit.setVehicle(this);
     }
 }

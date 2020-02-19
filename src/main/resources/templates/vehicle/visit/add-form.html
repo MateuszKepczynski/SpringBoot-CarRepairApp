@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Show Employees</title>
+    <title>Visit Form</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,40 +24,29 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav navbar-right">
                 <a class="nav-item nav-link  " style="font-size: 20px" th:href="@{/}">Home </a>
-                <a class="nav-item nav-link " style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car Owners</a>
+                <a class="nav-item nav-link active" style="font-size: 20px" th:href="@{/owner/showFindForm}">Find Car
+                    Owners<span class="sr-only">(current)</span></a>
                 <div sec:authorize="hasAnyRole('ROLE_MANAGER')">
-                    <a class="nav-item nav-link  active" style="font-size: 20px" th:href="@{/employee/showAll}">Employee Panel <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" style="font-size: 20px" th:href="@{/employee/showAll}">Employee
+                        Panel</a>
                 </div>
             </div>
         </div>
     </div>
 </nav>
 <div class="container">
-    <h4>Employee Panel</h4>
-    <a th:href="@{/employee/showEmployeePanel}" class="btn btn-secondary btm-sm">Add Employee</a>
     <hr>
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Phone Number</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="temEmployee: ${employeeList}">
-            <td>
-                <a th:href="@{/employee/showProfile(employeeId=${temEmployee.id})}"
-                   th:text="${temEmployee.firstName} + ' ' + ${temEmployee.lastName}"/>
-            </td>
-            <td th:text="${temEmployee.address}"/>
-            <td th:text="${temEmployee.city}"/>
-            <td th:text="${temEmployee.phoneNumber}"/>
-        </tr>
-        </tbody>
-    </table>
-    <hr>
+    <h4>Visit Form</h4>
+    <form action="#" th:action="@{/visit/save}" th:object="${visit}" method="post">
+        <input type="hidden" th:field="*{vehicle}"/>
+        <input type="hidden" th:field="*{id}"/>
+        Description:<input type="text" th:field="*{description}" class="form-control mb-4 col-4"
+                           placeholder="Description"/>
+        Date: <input type="date" id="visitDate" name="visitDate" th:field="*{date}" class="form-control mb-4 col-4"/>
+        <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+        <a class="btn btn-danger btn-sm" th:href="@{/visit/delete(visitId=*{id})}"
+           onclick="if (!(confirm('Are you sure you want to delete this car?'))) return false">Delete</a>
+    </form>
 </div>
 <footer class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">© 2020 Copyright

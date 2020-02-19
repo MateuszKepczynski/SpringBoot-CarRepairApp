@@ -95,7 +95,11 @@
 </div>
 
 <footer class="page-footer font-small blue">
-    <div class="footer-copyright text-center py-3">© 2020 Copyright</div>
+    <div class="footer-copyright text-center py-3">© 2020 Copyright
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
 </footer>
 </body>
 </html>
